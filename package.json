@@ -1,19 +1,33 @@
 {
-  "name": "rate-throttle-limiter",
+  "name": "rate-throttle-limiter-testing",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsc-watch --onSuccess \"npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup"
   },
-  "keywords": [],
+  "homepage": "https://github.com/ShakirFarhan/rate-throttle-limiter",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShakirFarhan/rate-throttle-limiter"
+  },
+  "keywords": [
+    "rate-limiter",
+    "throttle-limiter",
+    "express-rate-limiter",
+    "rate-throttle-limiter"
+  ],
   "author": "Shakir Farhan",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "@types/express": "^4.17.21",
     "tsc-watch": "^6.2.0",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.5"
   },
   "dependencies": {

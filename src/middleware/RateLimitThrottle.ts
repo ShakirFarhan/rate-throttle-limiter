@@ -2,13 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { LimiterOptions } from '../types';
 import Redis from 'ioredis';
 
-class RateLimitThrottle {
-  private rateLimitWindowMs: number;
-  private maxRequestsPerWindow: number;
-  private throttleBurst: number;
-  private throttleRate: number;
-  private redisClient: Redis;
-  private customMessage: string | undefined;
+export class RateLimitThrottle {
+  rateLimitWindowMs: number;
+  maxRequestsPerWindow: number;
+  throttleBurst: number;
+  throttleRate: number;
+  redisClient: Redis;
+  customMessage: string | undefined;
 
   constructor(options: LimiterOptions) {
     this.rateLimitWindowMs = options.rateLimitWindowMs || 15 * 60 * 1000;
@@ -52,13 +52,11 @@ class RateLimitThrottle {
             this.rateLimitWindowMs
           );
           if (requestCount > this.maxRequestsPerWindow) {
-            return res
-              .status(429)
-              .json({
-                message:
-                  this.customMessage ||
-                  'Too many requests from this IP, please try again later',
-              });
+            return res.status(429).json({
+              message:
+                this.customMessage ||
+                'Too many requests from this IP, please try again later',
+            });
           }
         }
       } catch (error) {
@@ -81,13 +79,11 @@ class RateLimitThrottle {
         }
         // Check's if the number of requests exceeds the burst limit
         if (throttleQueue.length >= this.throttleBurst) {
-          return res
-            .status(429)
-            .json({
-              message:
-                this.customMessage ||
-                'Too many requests from this IP, please try again later',
-            });
+          return res.status(429).json({
+            message:
+              this.customMessage ||
+              'Too many requests from this IP, please try again later',
+          });
         }
 
         // pushes the current request time to the queue
@@ -110,5 +106,3 @@ class RateLimitThrottle {
     };
   }
 }
-
-export default RateLimitThrottle;
